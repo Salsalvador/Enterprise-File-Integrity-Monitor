@@ -1,0 +1,9 @@
+#This is an example
+
+# Base paths to compare (Roots)
+BACKUP=F:\Data\Company\
+LIVE=G:\Data\Company\
+
+#Subpaths
+DOCs\Archive_2024
+DOCs\Archive_2025
