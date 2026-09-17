@@ -37,7 +37,7 @@ double calcolaDimensioneMB(const std::string& rootPathStr)
         }
     }
     catch(const fs::filesystem_error& e){}
-    return totalSizeBytes / (1024.0 * 1024.0); // Converte da byte a Megabyte
+    return totalSizeBytes / (1024.0 * 1024.0);
 }
 
 std::string calcolaHash(const std::string& filePath)
@@ -160,8 +160,7 @@ bool confrontaSnapshot(const std::map<std::string, std::string>& backup, const s
 int main()
 {
     auto start_time = std::chrono::high_resolution_clock::now();
-
-    // Recupera il desktop in base all'utente Windows corrente
+    
     const char* userProfilePath = std::getenv("USERPROFILE");
     if(userProfilePath == nullptr)
     {
