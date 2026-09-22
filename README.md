@@ -8,8 +8,8 @@ Specifically designed to handle massive enterprise files (e.g., large database d
 
 INSTRUCTIONS:
 
-1) Create a text file on your desktop and call it FIM_config.txt. Inside, you must define your base directories using BACKUP= and LIVE=. Then, type the specific sub-directories you want to compare. You can also type comments by starting a line with the # symbol. I provided an example in this repo
+1) Create a text file and call it FIM_config.txt. Inside, you must define your base directories using BACKUP= and LIVE=. Then, type the specific sub-directories you want to compare. You can also type comments by starting a line with the # symbol. I provided an example in this repo
 
-2) Open the cmd and execute cd %USERPROFILE%\Desktop (or cd C:\Users\*username*\Desktop) to move the terminal to the desktop. Then double click on the .exe or alternatively execute from the cmd this command: .\FIM.exe
+2) Create a folder and call it as you please. IMPORTANT: FIM_config.txt and FIM.exe both need to stay in this folder, otherwise it won't work
  
-3) As soon as the process is over, the Report_FIM.txt file will be generated on the desktop (or overwritten if already existing). It will contain the detailed output of the analysis, including execution time and the size of the scanned directories
+3) As soon as the process is over, a Report_FIM.txt file will be generated in the folder (or overwritten if already existing). It will contain the detailed output of the analysis, including execution time and the size of the scanned directories
