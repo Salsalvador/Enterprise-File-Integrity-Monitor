@@ -28,7 +28,7 @@ double calcolaDimensioneMB(const std::string& rootPathStr)
     double totalSizeBytes = 0.0;
     try
     {
-        for(const auto& entry : fs::recursive_directory_iterator(rootPathStr))
+        for(const auto& entry : fs::recursive_directory_iterator(rootPathStr, fs::directory_options::skip_permission_denied))
         {
             if(fs::is_regular_file(entry))
             {
@@ -97,7 +97,7 @@ std::map<std::string, std::string> scansionaDirectory(const std::string& rootPat
 
     try
     {
-        for(const auto& entry : fs::recursive_directory_iterator(rootPath))
+        for(const auto& entry : fs::recursive_directory_iterator(rootPath, fs::directory_options::skip_permission_denied))
         {
             if(fs::is_regular_file(entry))
             {
@@ -160,18 +160,14 @@ bool confrontaSnapshot(const std::map<std::string, std::string>& backup, const s
 int main()
 {
     auto start_time = std::chrono::high_resolution_clock::now();
-    
-    const char* userProfilePath = std::getenv("USERPROFILE");
-    if(userProfilePath == nullptr)
-    {
-        std::cerr << "[ERRORE CRITICO] Impossibile determinare la cartella utente di Windows." << std::endl;
-        system("pause");
-        return 1;
-    }
 
-    std::string desktopPath = std::string(userProfilePath) + "\\Desktop";
-    std::string configPath = desktopPath + "\\FIM_config.txt";
-    std::string reportPath = desktopPath + "\\Report_FIM.txt";
+    char buffer[MAX_PATH];
+    GetModuleFileNameA(NULL, buffer, MAX_PATH);
+    fs::path percorsoEseguibile = buffer;
+    fs::path cartellaCorrente = percorsoEseguibile.parent_path();
+
+    std::string configPath = (cartellaCorrente / "FIM_config.txt").string();
+    std::string reportPath = (cartellaCorrente / "Report_FIM.txt").string();
 
     fileReport.open(reportPath, std::ios::trunc);
 
@@ -182,7 +178,8 @@ int main()
     std::ifstream fileConfig(configPath);
     if(!fileConfig.is_open())
     {
-        logMsg("[ERRORE CRITICO] File di configurazione non trovato: " + configPath);
+        logMsg("[ERRORE CRITICO] File di configurazione non trovato in: " + cartellaCorrente.string());
+        logMsg("Assicurati che 'FIM_config.txt' sia nella stessa cartella di questo eseguibile.");
         if (fileReport.is_open()) fileReport.close();
         system("pause");
         return 1;
